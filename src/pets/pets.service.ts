@@ -18,8 +18,14 @@ export class PetsService {
     return this.petsRepository.save(newPet);
   }
 
-  async findAll(): Promise<Pet[]> {
-    return this.petsRepository.find();
+  async findAll(ownerId?: number): Promise<Pet[]> {
+    return ownerId
+      ? this.petsRepository.find({ ownerId })
+      : this.petsRepository.find();
+  }
+
+  async find(filter?: Partial<Pet>): Promise<Pet[]> {
+    return this.petsRepository.find(filter);
   }
 
   async findOne(id: number): Promise<Pet> {
